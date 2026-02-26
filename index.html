@@ -70,7 +70,7 @@
             .then(data => {
                 allStaffData = data;
                 let jawatanSelect = document.getElementById('jawatan');
-                let uniqueJawatan = [...new Set(data.map(item => item[0]))];
+                let uniqueJawatan = [...new Set(data.map(item => item[1]))];
                 
                 uniqueJawatan.forEach(j => {
                     let opt = document.createElement('option');
@@ -89,11 +89,11 @@
         
         if (selectedJawatan) {
             namaSelect.disabled = false;
-            let filteredNames = allStaffData.filter(row => row[0] === selectedJawatan);
+            let filteredNames = allStaffData.filter(row => row[1] === selectedJawatan);
             filteredNames.forEach(row => {
                 let opt = document.createElement('option');
-                opt.value = row[1];
-                opt.innerHTML = row[1];
+                opt.value = row[0];
+                opt.innerHTML = row[0];
                 namaSelect.appendChild(opt);
             });
         } else {
