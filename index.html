@@ -25,24 +25,48 @@
             font-family: 'SF Pro Display', 'Plus Jakarta Sans', sans-serif;
         }
 
-        body {
-            background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 50%, #fbc2eb 100%);
-            background-size: 300% 300%;
-            animation: liquidMove 10s ease-in-out infinite alternate;
+                body {
+            /* Latar belakang Liquid yang diperkukuh */
+            background: #a1c4fd; /* Warna fallback */
+            background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 33%, #fbc2eb 66%, #a1c4fd 100%);
+            background-size: 400% 400%; /* Saiz lebih besar untuk pergerakan lebih smooth */
+            
+            /* Animasi diperbaiki untuk mobile */
+            animation: liquidMove 15s ease-in-out infinite;
+            -webkit-animation: liquidMove 15s ease-in-out infinite; /* Untuk Safari iOS */
+            
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            
+            /* Gunakan min-height untuk elak ralat saiz pada mobile browser bar */
+            min-height: 100vh;
+            min-height: -webkit-fill-available; 
             width: 100vw;
             overflow: hidden;
             padding: 15px;
         }
 
+        /* Pergerakan animasi yang lebih luas */
         @keyframes liquidMove {
             0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
+
+        @-webkit-keyframes liquidMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Fix tambahan untuk memastikan container sentiasa di tengah tanpa skrol */
+        html {
+            height: -webkit-fill-available;
+            overflow: hidden;
+        }
+
 
         .container {
             width: 100%;
