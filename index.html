@@ -14,9 +14,8 @@
     
     <style>
         :root {
-            /* iOS Liquid Glass Palette */
-            --glass-white: rgba(255, 255, 255, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-white: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.6);
             --ios-blue: #007AFF;
         }
 
@@ -27,7 +26,6 @@
         }
 
         body {
-            /* Latar belakang Liquid Gradient yang bergerak */
             background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 50%, #fbc2eb 100%);
             background-size: 300% 300%;
             animation: liquidMove 10s ease-in-out infinite alternate;
@@ -38,7 +36,7 @@
             height: 100vh;
             width: 100vw;
             overflow: hidden;
-            padding: 20px;
+            padding: 15px;
         }
 
         @keyframes liquidMove {
@@ -49,98 +47,97 @@
         .container {
             width: 100%;
             max-width: 370px;
-            max-height: 92vh;
-        }
-
-        /* Card Utama - Liquid Glass Effect */
-        .glass-card {
-            background: var(--glass-white);
-            backdrop-filter: blur(40px) saturate(200%);
-            -webkit-backdrop-filter: blur(40px) saturate(200%);
-            border-radius: 40px;
-            border: 1.5px solid var(--glass-border);
-            padding: clamp(25px, 5vh, 40px) 30px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1), 
-                        inset 0 0 20px rgba(255, 255, 255, 0.2);
+            max-height: 95vh;
             display: flex;
             flex-direction: column;
-            gap: clamp(15px, 2.5vh, 25px);
+            justify-content: center;
         }
 
-        .header { text-align: center; }
+        .glass-card {
+            background: var(--glass-white);
+            backdrop-filter: blur(40px) saturate(210%);
+            -webkit-backdrop-filter: blur(40px) saturate(210%);
+            border-radius: 38px;
+            border: 1.5px solid var(--glass-border);
+            padding: clamp(20px, 4vh, 35px) 22px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(10px, 2.2vh, 18px);
+        }
+
+        .header { text-align: center; margin-bottom: 5px; }
         .header h1 { 
-            font-size: clamp(22px, 3.5vh, 28px); 
+            font-size: clamp(20px, 3vh, 26px); 
             margin: 0; 
             font-weight: 600; 
             color: #1d1d1f;
             letter-spacing: -0.5px;
         }
-        .header p { 
-            font-size: clamp(12px, 1.8vh, 14px); 
-            color: rgba(0,0,0,0.5); 
-            margin: 4px 0 0; 
-            font-weight: 400;
-        }
 
-        .form-group { width: 100%; }
+        .form-group { width: 100%; position: relative; }
         label { 
-            font-size: 11px; 
+            font-size: 10px; 
             font-weight: 600; 
-            color: rgba(0,0,0,0.6);
+            color: rgba(0,0,0,0.5);
             margin-bottom: 6px; 
             display: block; 
-            padding-left: 2px;
+            padding-left: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        /* Input ala iPhone */
         select, input {
             width: 100%;
-            padding: clamp(12px, 1.8vh, 15px);
-            background: rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 18px;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
             color: #000;
-            font-size: 15px;
+            font-size: 14px;
             outline: none;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.3s ease;
         }
 
-        select:focus, input:focus {
-            background: rgba(255, 255, 255, 0.8);
-            border-color: var(--ios-blue);
+        /* KHAS UNTUK TARIKH AGAR TIDAK TERKELUAR */
+        .row { 
+            display: flex; 
+            gap: 10px; 
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .row .form-group { 
+            flex: 1; 
+            min-width: 0; /* Penting: membenarkan elemen mengecil di bawah saiz asalnya */
         }
 
-        .row { display: flex; gap: 12px; }
-        .row .form-group { flex: 1; }
+        input[type="date"] {
+            padding: 11px 8px; /* Padding sisi dikurangkan sedikit */
+            font-size: 13px; /* Saiz teks dikecilkan sedikit untuk muat tarikh penuh */
+            cursor: pointer;
+            -webkit-appearance: none; /* Hilangkan default iOS styling */
+            min-height: 44px;
+        }
 
-        /* Butang Premium iPhone */
         button {
             width: 100%;
-            padding: clamp(14px, 2.2vh, 18px);
+            padding: clamp(14px, 2vh, 18px);
             background: var(--ios-blue);
             color: white;
             border: none;
-            border-radius: 20px;
-            font-size: 16px;
+            border-radius: 18px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
-            box-shadow: 0 10px 20px rgba(0, 122, 255, 0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
+            transition: transform 0.2s;
+            box-shadow: 0 10px 20px rgba(0, 122, 255, 0.2);
+            margin-top: 10px;
         }
 
-        button:active { transform: scale(0.96); }
+        button:active { transform: scale(0.97); }
 
-        #loading { text-align: center; font-size: 12px; color: var(--ios-blue); display: none; }
-
-        @media (max-height: 650px) {
-            .glass-card { padding: 20px; border-radius: 30px; }
-            .header h1 { font-size: 20px; }
-            .form-group { margin-bottom: 0px; }
-        }
+        #loading { text-align: center; font-size: 11px; color: var(--ios-blue); display: none; }
     </style>
 </head>
 <body>
@@ -149,28 +146,27 @@
     <div class="glass-card">
         <div class="header">
             <h1>E-Hadir</h1>
-            <p>Sistem Rekod Digital</p>
         </div>
 
         <form id="absenceForm">
             <div class="form-group">
-                <label>JAWATAN</label>
+                <label>Jawatan</label>
                 <select id="jawatan" name="jawatan" onchange="updateNama()" required>
                     <option value="">Pilih Jawatan</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label>NAMA STAF</label>
+                <label>Nama Staf</label>
                 <select id="nama" name="nama" required disabled>
                     <option value="">Pilih Nama</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label>SEBAB</label>
+                <label>Sebab</label>
                 <select name="sebab" required>
-                    <option value="Kerja Lapangan (Onsite)">Kerja Lapangan (Onsite)</option>
+                    <option value="Kerja Lapangan (Onsite)">Onsite</option>
                     <option value="Kursus/Latihan">Kursus/Latihan</option>
                     <option value="Cuti Rehat/Sakit">Cuti Rehat/Sakit</option>
                     <option value="Halfday">Halfday</option>
@@ -179,11 +175,11 @@
 
             <div class="row">
                 <div class="form-group">
-                    <label>MULA</label>
+                    <label>Mula</label>
                     <input type="date" name="tarikhMula" required>
                 </div>
                 <div class="form-group">
-                    <label>AKHIR</label>
+                    <label>Akhir</label>
                     <input type="date" name="tarikhAkhir" required>
                 </div>
             </div>
@@ -238,11 +234,15 @@
         document.getElementById('loading').style.display = 'block';
         fetch(scriptURL, { method: 'POST', body: new URLSearchParams(new FormData(this)), mode: 'no-cors' })
             .then(() => {
-                alert("✅ Berjaya!");
+                alert("✅ Rekod Berjaya!");
                 location.reload();
+            })
+            .catch(() => {
+                alert("❌ Ralat berlaku!");
+                btn.disabled = false;
+                document.getElementById('loading').style.display = 'none';
             });
     });
 </script>
-
 </body>
 </html>
