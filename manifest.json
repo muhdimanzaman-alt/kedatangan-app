@@ -1,11 +1,16 @@
 {
-  "name": "E-Hadir",
+  "name": "Sistem Ketidakhadiran",
   "short_name": "E-Hadir",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#007bff",
   "icons": [
-    { "src": "icon.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }
