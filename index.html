@@ -1,71 +1,183 @@
 <!DOCTYPE html>
-<html>
+<html lang="ms">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Borang Ketidakhadiran <link rel="icon" type="image/png" sizes="512x512" href="icon.png">
-<link rel="apple-touch-icon" href="icon.png">
-<meta name="theme-color" content="#007bff"></title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <title>E-Hadir | Sistem Ketidakhadiran</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
     <style>
-        body { background: #f0f2f5; padding: 20px; font-family: 'sans-serif'; }
-        .form-card { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 500px; margin: auto; }
-        .btn-primary { background: #007bff; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; }
-        .loading { display: none; text-align: center; margin-top: 10px; color: blue; }
+        :root {
+            --primary-color: #4F46E5;
+            --primary-hover: #4338CA;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-main);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header { text-align: center; margin-bottom: 30px; }
+        .header i { 
+            font-size: 40px; 
+            color: var(--primary-color); 
+            background: #EEF2FF;
+            padding: 20px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .header h1 { font-size: 24px; margin: 0; font-weight: 600; color: #111827; }
+        .header p { color: var(--text-muted); font-size: 14px; margin-top: 5px; }
+
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #374151; padding-left: 4px; }
+        
+        select, input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background-color: #F9FAFB;
+            color: var(--text-main);
+        }
+
+        select:focus, input:focus {
+            border-color: var(--primary-color);
+            background-color: #fff;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        .row { display: flex; gap: 12px; }
+        .row > div { flex: 1; }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        button:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+        button:active { transform: translateY(0); }
+        button:disabled { background-color: #9CA3AF; cursor: not-allowed; }
+
+        #loading { display: none; font-size: 14px; color: var(--primary-color); margin-top: 15px; text-align: center; }
+        
+        /* Custom styling for date inputs */
+        input[type="date"] { font-family: 'Inter', sans-serif; }
     </style>
 </head>
 <body>
 
-<div class="form-card">
-    <h3 class="text-center mb-4">Rekod Ketidakhadiran</h3>
-    <form id="absenceForm">
-        <div class="mb-3">
-            <label class="form-label">Jawatan</label>
-            <select id="jawatan" name="jawatan" class="form-select" onchange="updateNama()" required>
-                <option value="">-- Pilih Jawatan --</option>
-            </select>
+<div class="container">
+    <div class="glass-card">
+        <div class="header">
+            <i class="fa-solid fa-calendar-check"></i>
+            <h1>E-Hadir</h1>
+            <p>Sila lengkapkan maklumat ketidakhadiran</p>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Nama</label>
-            <select id="nama" name="nama" class="form-select" required disabled>
-                <option value="">-- Pilih Nama --</option>
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Sebab Ketidakhadiran</label>
-            <select name="sebab" class="form-select" required>
-                <option value="Kerja Lapangan (Onsite)">Kerja Lapangan (Onsite)</option>
-                <option value="Kursus/Latihan">Kursus/Latihan</option>
-                <option value="Cuti Rehat/Sakit">Cuti Rehat/Sakit</option>
-                <option value="Halfday">Halfday</option>
-            </select>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col">
-                <label class="form-label">Tarikh Mula</label>
-                <input type="date" name="tarikhMula" class="form-control" required>
+        <form id="absenceForm">
+            <div class="form-group">
+                <label>Jawatan</label>
+                <select id="jawatan" name="jawatan" onchange="updateNama()" required>
+                    <option value="">Pilih Jawatan</option>
+                </select>
             </div>
-            <div class="col">
-                <label class="form-label">Tarikh Akhir</label>
-                <input type="date" name="tarikhAkhir" class="form-control" required>
-            </div>
-        </div>
 
-        <button type="submit" id="submitBtn" class="btn-primary">Hantar Rekod</button>
-        <div id="loading" class="loading">Sedang memproses...</div>
-    </form>
+            <div class="form-group">
+                <label>Nama Staf</label>
+                <select id="nama" name="nama" required disabled>
+                    <option value="">Pilih Nama</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Sebab</label>
+                <select name="sebab" required>
+                    <option value="Kerja Lapangan (Onsite)">Kerja Lapangan (Onsite)</option>
+                    <option value="Kursus/Latihan">Kursus/Latihan</option>
+                    <option value="Cuti Rehat/Sakit">Cuti Rehat/Sakit</option>
+                    <option value="Halfday">Halfday</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Mula</label>
+                    <input type="date" name="tarikhMula" required>
+                </div>
+                <div class="form-group">
+                    <label>Akhir</label>
+                    <input type="date" name="tarikhAkhir" required>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn">
+                <span>Hantar Rekod</span>
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+            
+            <div id="loading"><i class="fas fa-circle-notch fa-spin"></i> Memproses data...</div>
+        </form>
+    </div>
 </div>
 
 <script>
-// 1. TAMPAL URL ANDA DI SINI
+    // TAMPAL URL ANDA DI SINI
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxAR0c0U9ccGk90_yVd7scPEanktLzCJYW6g5ik9I5vmTCQmMT0rDbaZaDjscWiwU2GqA/exec'; 
 
     let allStaffData = [];
 
-    // Ambil data staf dari Google Sheets bila page load
     window.onload = function() {
         fetch(scriptURL + "?action=getStaff")
             .then(res => res.json())
@@ -74,7 +186,7 @@
                 let jawatanSelect = document.getElementById('jawatan');
                 let uniqueJawatan = [...new Set(data.map(item => item[1]))];
                 
-                uniqueJawatan.forEach(j => {
+                uniqueJawatan.sort().forEach(j => {
                     let opt = document.createElement('option');
                     opt.value = j;
                     opt.innerHTML = j;
@@ -83,16 +195,15 @@
             });
     };
 
-    // Tapis nama mengikut jawatan
     function updateNama() {
         let selectedJawatan = document.getElementById('jawatan').value;
         let namaSelect = document.getElementById('nama');
-        namaSelect.innerHTML = '<option value="">-- Pilih Nama --</option>';
+        namaSelect.innerHTML = '<option value="">Pilih Nama</option>';
         
         if (selectedJawatan) {
             namaSelect.disabled = false;
             let filteredNames = allStaffData.filter(row => row[1] === selectedJawatan);
-            filteredNames.forEach(row => {
+            filteredNames.sort().forEach(row => {
                 let opt = document.createElement('option');
                 opt.value = row[0];
                 opt.innerHTML = row[0];
@@ -103,28 +214,30 @@
         }
     }
 
-    // Submit form
     document.getElementById('absenceForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        document.getElementById('submitBtn').disabled = true;
-        document.getElementById('loading').style.display = 'block';
+        const btn = document.getElementById('submitBtn');
+        const loader = document.getElementById('loading');
         
-        fetch(scriptURL, { method: 'POST', body: new FormData(this)})
-            .then(res => {
-                alert("Berjaya Disimpan!");
-                document.getElementById('absenceForm').reset();
-                document.getElementById('submitBtn').disabled = false;
-                document.getElementById('loading').style.display = 'none';
+        btn.disabled = true;
+        loader.style.display = 'block';
+        
+        const data = new URLSearchParams(new FormData(this));
+
+        fetch(scriptURL, { method: 'POST', body: data, mode: 'no-cors' })
+            .then(() => {
+                alert("✅ Rekod Berjaya Dihantar!");
+                this.reset();
+                btn.disabled = false;
+                loader.style.display = 'none';
                 document.getElementById('nama').disabled = true;
             })
             .catch(error => {
-                alert("Ralat! Sila cuba lagi.");
-                document.getElementById('submitBtn').disabled = false;
-                document.getElementById('loading').style.display = 'none';
+                alert("❌ Ralat! Sila cuba lagi.");
+                btn.disabled = false;
+                loader.style.display = 'none';
             });
     });
-  
 </script>
-
 </body>
 </html>
