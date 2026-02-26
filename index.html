@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+[11:01 am, 26/02/2026] Iman Zaman: <!DOCTYPE html>
 <html lang="ms">
 <head>
     <meta charset="UTF-8">
@@ -17,8 +17,27 @@
             --glass-bg: rgba(255, 255, 255, 0.12);
             --glass-border: rgba(255, 255, 255, 0.2);
             --input-bg: rgba(255, 255, 255, 0.08);
+    …
+[11:17 am, 26/02/2026] Iman Zaman: <!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>E-Hadir | Aesthetic Glass</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
+    <meta name="theme-color" content="#764ba2">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --input-bg: rgba(255, 255, 255, 0.08);
             --text-white: #ffffff;
-            --accent-color: #ffffff;
         }
 
         * { 
@@ -35,9 +54,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-            padding: 20px;
+            /* Paksa tinggi skrin tepat 100% tanpa skrol */
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            padding: 10px;
         }
 
         @keyframes gradientBG {
@@ -48,112 +69,100 @@
 
         .container {
             width: 100%;
-            max-width: 400px;
-            position: relative;
-        }
-
-        /* Hiasan bulatan di belakang */
-        .circle-decor {
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            background: rgba(255, 255, 255, 0.1);
-            filter: blur(40px);
-            border-radius: 50%;
-            z-index: -1;
+            max-width: 380px;
+            /* Memastikan container tidak melebihi tinggi skrin */
+            max-height: 95vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .glass-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
-            border-radius: 32px;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 28px;
             border: 1px solid var(--glass-border);
-            padding: 40px 25px;
+            /* Padding dinamik mengikut tinggi skrin */
+            padding: clamp(20px, 4vh, 35px) 25px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             color: var(--text-white);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(10px, 2vh, 20px);
         }
 
-        .header { text-align: center; margin-bottom: 30px; }
-        .header i { font-size: 45px; margin-bottom: 15px; opacity: 0.9; }
-        .header h1 { font-size: 26px; margin: 0; font-weight: 600; letter-spacing: -0.5px; }
-        .header p { font-size: 13px; opacity: 0.7; margin: 5px 0 0; }
+        .header { text-align: center; }
+        .header i { font-size: clamp(30px, 5vh, 45px); margin-bottom: 5px; opacity: 0.9; }
+        .header h1 { font-size: clamp(20px, 3vh, 26px); margin: 0; font-weight: 600; }
+        .header p { font-size: clamp(11px, 1.5vh, 13px); opacity: 0.7; margin: 2px 0 0; }
 
-        .form-group { margin-bottom: 20px; width: 100%; }
-        label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; display: block; opacity: 0.8; padding-left: 5px; }
+        .form-group { width: 100%; }
+        label { 
+            font-size: 10px; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            margin-bottom: 5px; 
+            display: block; 
+            opacity: 0.8; 
+            padding-left: 5px; 
+        }
 
         select, input {
             width: 100%;
-            padding: 14px 16px;
+            padding: clamp(10px, 1.5vh, 14px) 15px;
             background: var(--input-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
+            border-radius: 14px;
             color: white;
-            font-size: 15px;
+            font-size: 14px;
             outline: none;
-            transition: all 0.3s ease;
         }
 
-        /* Style untuk dropdown options */
-        select option { background: #333; color: white; }
+        select option { background: #4158D0; color: white; }
 
-        select:focus, input:focus {
-            background: rgba(255, 255, 255, 0.18);
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-        }
-
-        /* Fix untuk susunan Mula & Akhir */
         .row { 
             display: flex; 
-            gap: 12px; 
-            margin-bottom: 20px;
+            gap: 10px; 
             align-items: flex-end;
         }
-        .row .form-group { margin-bottom: 0; flex: 1; }
+        .row .form-group { flex: 1; }
 
         button {
             width: 100%;
-            padding: 18px;
-            margin-top: 10px;
+            padding: clamp(12px, 2vh, 18px);
+            margin-top: 5px;
             background: #ffffff;
             color: #764ba2;
             border: none;
-            border-radius: 18px;
-            font-size: 15px;
+            border-radius: 16px;
+            font-size: 14px;
             font-weight: 700;
-            letter-spacing: 0.5px;
             cursor: pointer;
-            transition: all 0.3s ease;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 8px;
         }
 
-        button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); opacity: 0.95; }
-        button:active { transform: translateY(0); }
-        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        #loading { text-align: center; font-size: 11px; margin-top: 5px; display: none; }
 
-        #loading { text-align: center; margin-top: 15px; font-size: 12px; display: none; }
-
-        @media (max-width: 360px) {
-            .row { flex-direction: column; }
-            .glass-card { padding: 30px 20px; }
+        /* Media Query untuk phone sangat pendek */
+        @media (max-height: 600px) {
+            .glass-card { padding: 15px; border-radius: 20px; }
+            .header i { display: none; } /* Sorok ikon jika skrin terlalu pendek */
+            .form-group { margin-bottom: 5px; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="circle-decor" style="top: -40px; right: -40px; background: rgba(200, 80, 192, 0.3);"></div>
-    <div class="circle-decor" style="bottom: -40px; left: -40px; background: rgba(65, 88, 208, 0.3);"></div>
-    
     <div class="glass-card">
         <div class="header">
             <i class="fa-solid fa-feather-pointed"></i>
             <h1>E-Hadir</h1>
-            <p>Sistem Rekod Ketidakhadiran</p>
+            <p>Rekod Ketidakhadiran</p>
         </div>
 
         <form id="absenceForm">
@@ -174,7 +183,7 @@
             <div class="form-group">
                 <label>Sebab</label>
                 <select name="sebab" required>
-                    <option value="Kerja Lapangan (Onsite)">Kerja Lapangan (Onsite)</option>
+                    <option value="Kerja Lapangan (Onsite)">Onsite</option>
                     <option value="Kursus/Latihan">Kursus/Latihan</option>
                     <option value="Cuti Rehat/Sakit">Cuti Rehat/Sakit</option>
                     <option value="Halfday">Halfday</option>
@@ -198,28 +207,24 @@
             </button>
             
             <div id="loading">
-                <i class="fas fa-spinner fa-spin"></i> Memproses data...
+                <i class="fas fa-spinner fa-spin"></i> Memproses...
             </div>
         </form>
     </div>
 </div>
 
 <script>
-    // GANTIKAN URL DI BAWAH DENGAN URL WEB APP GOOGLE SCRIPT ANDA
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxAR0c0U9ccGk90_yVd7scPEanktLzCJYW6g5ik9I5vmTCQmMT0rDbaZaDjscWiwU2GqA/exec'; 
 
     let allStaffData = [];
 
-    // Ambil data staf masa page load
     window.onload = function() {
         fetch(scriptURL + "?action=getStaff")
             .then(res => res.json())
             .then(data => {
                 allStaffData = data;
                 let jawatanSelect = document.getElementById('jawatan');
-                // Ambil unik jawatan dari Kolum B (index 1)
                 let uniqueJawatan = [...new Set(data.map(item => item[1]))];
-                
                 uniqueJawatan.sort().forEach(j => {
                     if(j) {
                         let opt = document.createElement('option');
@@ -227,20 +232,16 @@
                         jawatanSelect.appendChild(opt);
                     }
                 });
-            })
-            .catch(err => console.error("Ralat ambil data:", err));
+            });
     };
 
-    // Filter Nama (Kolum A / index 0) ikut Jawatan (Kolum B / index 1)
     function updateNama() {
         let selectedJawatan = document.getElementById('jawatan').value;
         let namaSelect = document.getElementById('nama');
         namaSelect.innerHTML = '<option value="">Pilih Nama</option>';
-        
         if (selectedJawatan) {
             namaSelect.disabled = false;
-            let filteredNames = allStaffData.filter(row => row[1] === selectedJawatan);
-            filteredNames.sort().forEach(row => {
+            allStaffData.filter(row => row[1] === selectedJawatan).forEach(row => {
                 if(row[0]) {
                     let opt = document.createElement('option');
                     opt.value = opt.innerHTML = row[0];
@@ -252,33 +253,19 @@
         }
     }
 
-    // Submit Borang
     document.getElementById('absenceForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
         const loader = document.getElementById('loading');
-        
         btn.disabled = true;
         loader.style.display = 'block';
-        
-        const data = new URLSearchParams(new FormData(this));
-
-        fetch(scriptURL, { method: 'POST', body: data, mode: 'no-cors' })
+        fetch(scriptURL, { method: 'POST', body: new URLSearchParams(new FormData(this)), mode: 'no-cors' })
             .then(() => {
-                alert("✨ Rekod berjaya dihantar ke Google Sheets!");
-                this.reset();
-                btn.disabled = false;
-                loader.style.display = 'none';
-                document.getElementById('nama').disabled = true;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("❌ Ralat berlaku. Sila cuba lagi.");
-                btn.disabled = false;
-                loader.style.display = 'none';
+                alert("✨ Berjaya dihantar!");
+                location.reload();
             });
     });
 </script>
 
 </body>
-</html
+</html>
