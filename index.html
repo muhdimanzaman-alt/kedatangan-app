@@ -3,127 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Hadir | Sistem Ketidakhadiran</title>
+    <title>E-Hadir | Aesthetic</title>
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
         :root {
-            --primary-color: #4F46E5;
-            --primary-hover: #4338CA;
-            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --text-main: #1F2937;
-            --text-muted: #6B7280;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --input-bg: rgba(255, 255, 255, 0.1);
+            --text-white: #ffffff;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-gradient);
-            background-attachment: fixed;
+            /* Latar belakang animasi mesh gradient */
+            background: linear-gradient(45deg, #4158D0, #C850C0, #FFCC70);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            color: var(--text-main);
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .container {
             width: 100%;
-            max-width: 420px;
+            max-width: 400px;
             padding: 20px;
+            z-index: 1;
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
             padding: 40px 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            animation: slideUp 0.6s ease-out;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            color: var(--text-white);
+            text-align: center;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .header { text-align: center; margin-bottom: 30px; }
-        .header i { 
-            font-size: 40px; 
-            color: var(--primary-color); 
-            background: #EEF2FF;
-            padding: 20px;
-            border-radius: 50%;
+        .header i {
+            font-size: 45px;
             margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
         }
-        .header h1 { font-size: 24px; margin: 0; font-weight: 600; color: #111827; }
-        .header p { color: var(--text-muted); font-size: 14px; margin-top: 5px; }
 
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #374151; padding-left: 4px; }
-        
+        .header h1 { font-size: 28px; margin: 0; font-weight: 600; letter-spacing: -1px; }
+        .header p { font-size: 14px; opacity: 0.8; margin-bottom: 30px; }
+
+        .form-group { text-align: left; margin-bottom: 18px; }
+        label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; opacity: 0.9; }
+
         select, input {
             width: 100%;
-            padding: 14px 16px;
-            border: 1.5px solid #E5E7EB;
-            border-radius: 12px;
+            padding: 14px;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            color: white;
             font-size: 15px;
-            transition: all 0.3s ease;
-            background-color: #F9FAFB;
-            color: var(--text-main);
+            outline: none;
+            transition: 0.3s;
         }
+
+        select option { background: #764ba2; color: white; }
 
         select:focus, input:focus {
-            border-color: var(--primary-color);
-            background-color: #fff;
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
         }
 
-        .row { display: flex; gap: 12px; }
-        .row > div { flex: 1; }
+        .row { display: flex; gap: 10px; }
 
         button {
             width: 100%;
             padding: 16px;
-            background-color: var(--primary-color);
-            color: white;
+            margin-top: 15px;
+            background: white;
+            color: #764ba2;
             border: none;
-            border-radius: 14px;
+            border-radius: 15px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        button:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+        button:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(0,0,0,0.2); }
         button:active { transform: translateY(0); }
-        button:disabled { background-color: #9CA3AF; cursor: not-allowed; }
 
-        #loading { display: none; font-size: 14px; color: var(--primary-color); margin-top: 15px; text-align: center; }
-        
-        /* Custom styling for date inputs */
-        input[type="date"] { font-family: 'Inter', sans-serif; }
+        #loading { margin-top: 15px; font-size: 13px; display: none; }
+
+        /* Hiasan Bulatan di Belakang Card */
+        .bg-circles {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; overflow: hidden;
+        }
+        .circle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            filter: blur(50px);
+        }
     </style>
 </head>
 <body>
 
+<div class="bg-circles">
+    <div class="circle" style="width: 300px; height: 300px; top: -50px; left: -50px;"></div>
+    <div class="circle" style="width: 200px; height: 200px; bottom: 50px; right: -50px;"></div>
+</div>
+
 <div class="container">
     <div class="glass-card">
         <div class="header">
-            <i class="fa-solid fa-calendar-check"></i>
+            <i class="fa-solid fa-cloud-moon"></i>
             <h1>E-Hadir</h1>
-            <p>Sila lengkapkan maklumat ketidakhadiran</p>
+            <p>Log Ketidakhadiran Pintar</p>
         </div>
 
         <form id="absenceForm">
@@ -135,7 +152,7 @@
             </div>
 
             <div class="form-group">
-                <label>Nama Staf</label>
+                <label>Nama</label>
                 <select id="nama" name="nama" required disabled>
                     <option value="">Pilih Nama</option>
                 </select>
@@ -144,7 +161,7 @@
             <div class="form-group">
                 <label>Sebab</label>
                 <select name="sebab" required>
-                    <option value="Kerja Lapangan (Onsite)">Kerja Lapangan (Onsite)</option>
+                    <option value="Kerja Lapangan (Onsite)">Onsite</option>
                     <option value="Kursus/Latihan">Kursus/Latihan</option>
                     <option value="Cuti Rehat/Sakit">Cuti Rehat/Sakit</option>
                     <option value="Halfday">Halfday</option>
@@ -162,20 +179,14 @@
                 </div>
             </div>
 
-            <button type="submit" id="submitBtn">
-                <span>Hantar Rekod</span>
-                <i class="fa-solid fa-paper-plane"></i>
-            </button>
-            
-            <div id="loading"><i class="fas fa-circle-notch fa-spin"></i> Memproses data...</div>
+            <button type="submit" id="submitBtn">HANTAR REKOD</button>
+            <div id="loading"><i class="fas fa-spinner fa-spin"></i> Menghantar ke Cloud...</div>
         </form>
     </div>
 </div>
 
 <script>
-    // TAMPAL URL ANDA DI SINI
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxAR0c0U9ccGk90_yVd7scPEanktLzCJYW6g5ik9I5vmTCQmMT0rDbaZaDjscWiwU2GqA/exec'; 
-
     let allStaffData = [];
 
     window.onload = function() {
@@ -185,11 +196,9 @@
                 allStaffData = data;
                 let jawatanSelect = document.getElementById('jawatan');
                 let uniqueJawatan = [...new Set(data.map(item => item[1]))];
-                
                 uniqueJawatan.sort().forEach(j => {
                     let opt = document.createElement('option');
-                    opt.value = j;
-                    opt.innerHTML = j;
+                    opt.value = opt.innerHTML = j;
                     jawatanSelect.appendChild(opt);
                 });
             });
@@ -199,43 +208,24 @@
         let selectedJawatan = document.getElementById('jawatan').value;
         let namaSelect = document.getElementById('nama');
         namaSelect.innerHTML = '<option value="">Pilih Nama</option>';
-        
         if (selectedJawatan) {
             namaSelect.disabled = false;
-            let filteredNames = allStaffData.filter(row => row[1] === selectedJawatan);
-            filteredNames.sort().forEach(row => {
+            allStaffData.filter(row => row[1] === selectedJawatan).forEach(row => {
                 let opt = document.createElement('option');
-                opt.value = row[0];
-                opt.innerHTML = row[0];
+                opt.value = opt.innerHTML = row[0];
                 namaSelect.appendChild(opt);
             });
-        } else {
-            namaSelect.disabled = true;
         }
     }
 
     document.getElementById('absenceForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        const btn = document.getElementById('submitBtn');
-        const loader = document.getElementById('loading');
-        
-        btn.disabled = true;
-        loader.style.display = 'block';
-        
-        const data = new URLSearchParams(new FormData(this));
-
-        fetch(scriptURL, { method: 'POST', body: data, mode: 'no-cors' })
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('loading').style.display = 'block';
+        fetch(scriptURL, { method: 'POST', body: new URLSearchParams(new FormData(this)), mode: 'no-cors' })
             .then(() => {
-                alert("✅ Rekod Berjaya Dihantar!");
-                this.reset();
-                btn.disabled = false;
-                loader.style.display = 'none';
-                document.getElementById('nama').disabled = true;
-            })
-            .catch(error => {
-                alert("❌ Ralat! Sila cuba lagi.");
-                btn.disabled = false;
-                loader.style.display = 'none';
+                alert("✨ Berjaya disimpan!");
+                location.reload();
             });
     });
 </script>
