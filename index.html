@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borang Ketidakhadiran</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #f0f2f5; padding: 20px; font-family: 'sans-serif'; }
+        .form-card { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 500px; margin: auto; }
+        .btn-primary { background: #007bff; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; }
+        .loading { display: none; text-align: center; margin-top: 10px; color: blue; }
+    </style>
+</head>
+<body>
+
+<div class="form-card">
+    <h3 class="text-center mb-4">Rekod Ketidakhadiran</h3>
+    <form id="absenceForm">
+        <div class="mb-3">
+            <label class="form-label">Jawatan</label>
+            <select id="jawatan" name="jawatan" class="form-select" onchange="updateNama()" required>
+                <option value="">-- Pilih Jawatan --</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Nama</label>
+            <select id="nama" name="nama" class="form-select" required disabled>
+                <option value="">-- Pilih Nama --</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Sebab Ketidakhadiran</label>
+            <select name="sebab" class="form-select" required>
+                <option value="Kerja Lapangan (Onsite)">Kerja Lapangan (Onsite)</option>
+                <option value="Kursus/Latihan">Kursus/Latihan</option>
+                <option value="Cuti Rehat/Sakit">Cuti Rehat/Sakit</option>
+                <option value="Halfday">Halfday</option>
+            </select>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <label class="form-label">Tarikh Mula</label>
+                <input type="date" name="tarikhMula" class="form-control" required>
+            </div>
+            <div class="col">
+                <label class="form-label">Tarikh Akhir</label>
+                <input type="date" name="tarikhAkhir" class="form-control" required>
+            </div>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-primary">Hantar Rekod</button>
+        <div id="loading" class="loading">Sedang memproses...</div>
+    </form>
+</div>
+
+<script>
+// 1. TAMPAL URL ANDA DI SINI
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyX-cu-_NtRqNM0eCWybV7zxt3_kGVhZ4I9u2tFPUcrDhcVzk9Ausk5wFL2Ry8BIKT44Q/exec'; 
+
+    let allStaffData = [];
+
+    // Ambil data staf dari Google Sheets bila page load
+    window.onload = function() {
+        fetch(scriptURL + "?action=getStaff")
+            .then(res => res.json())
+            .then(data => {
+                allStaffData = data;
+                let jawatanSelect = document.getElementById('jawatan');
+                let uniqueJawatan = [...new Set(data.map(item => item[0]))];
+                
+                uniqueJawatan.forEach(j => {
+                    let opt = document.createElement('option');
+                    opt.value = j;
+                    opt.innerHTML = j;
+                    jawatanSelect.appendChild(opt);
+                });
+            });
+    };
+
+    // Tapis nama mengikut jawatan
+    function updateNama() {
+        let selectedJawatan = document.getElementById('jawatan').value;
+        let namaSelect = document.getElementById('nama');
+        namaSelect.innerHTML = '<option value="">-- Pilih Nama --</option>';
+        
+        if (selectedJawatan) {
+            namaSelect.disabled = false;
+            let filteredNames = allStaffData.filter(row => row[0] === selectedJawatan);
+            filteredNames.forEach(row => {
+                let opt = document.createElement('option');
+                opt.value = row[1];
+                opt.innerHTML = row[1];
+                namaSelect.appendChild(opt);
+            });
+        } else {
+            namaSelect.disabled = true;
+        }
+    }
+
+    // Submit form
+    document.getElementById('absenceForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('loading').style.display = 'block';
+        
+        fetch(scriptURL, { method: 'POST', body: new FormData(this)})
+            .then(res => {
+                alert("Berjaya Disimpan!");
+                document.getElementById('absenceForm').reset();
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('nama').disabled = true;
+            })
+            .catch(error => {
+                alert("Ralat! Sila cuba lagi.");
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('loading').style.display = 'none';
+            });
+    });
+  
+</script>
+
+</body>
+</html>
