@@ -234,7 +234,7 @@
         document.getElementById('loading').style.display = 'block';
         fetch(scriptURL, { method: 'POST', body: new URLSearchParams(new FormData(this)), mode: 'no-cors' })
             .then(() => {
-                alert("✅ Rekod Berjaya!");
+                alert("✅ Rekod Berjaya Dihantar!");
                 location.reload();
             })
             .catch(() => {
